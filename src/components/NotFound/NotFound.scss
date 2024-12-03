@@ -1,0 +1,12 @@
+@import '../../globals/variables';
+
+.message {
+  font-family: Arial, sans-serif;
+  background-color: $app-primary-color;
+  color: $app-secondary-color;
+
+  h1 {
+    font-size: 2em;
+    text-align: center;
+  }
+}

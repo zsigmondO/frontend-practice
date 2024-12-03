@@ -1,0 +1,32 @@
+@import '../../globals/variables.scss';
+
+.header {
+  background-color: $app-header-color;
+  display: grid;
+  height: 6rem;
+  align-content: center;
+
+  .icon {
+    font-size: 3rem;
+    color: $app-secondary-color;
+    margin-left: 3rem;
+  }
+
+  .icon:hover {
+    filter:drop-shadow(2px 2px 2px  darken($app-secondary-color, 50%));
+  }
+
+  .link {
+    color: $app-secondary-color;
+    align-content: center;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.5;
+    text-transform: capitalize;
+  }
+
+  .link:hover {
+      color: darken($app-secondary-color, 50%);
+  }
+}
