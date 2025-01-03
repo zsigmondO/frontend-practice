@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import Home from './components/Home/Home';
 import NotFound from './components/NotFound/NotFound';
 import Rate from './components/Rate/Rate';
+import ServerPagination from './components/ServerPagination/ServerPagination';
 
 import './index.scss';
 
@@ -19,6 +20,7 @@ if (container) {
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/rate" element={<Rate />} />
+          <Route path="/pagination/*" element={<ServerPagination />} />
         </Routes>
       </BrowserRouter>
     </StrictMode>,

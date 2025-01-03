@@ -8,7 +8,7 @@ function NotFound() {
   return (
     <>
       <Layout>
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-6 py-12">
+        <div className="min-h-screen flex flex-col justify-center items-center px-6 py-12">
           <div className="max-w-md w-full space-y-8 text-center">
             <div className="space-y-4">
               <h1 className="text-9xl font-extrabold text-gray-800">404</h1>
