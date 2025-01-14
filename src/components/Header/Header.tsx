@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { grey } from '@mui/material/colors';
+import { Tooltip } from '@mui/material';
 
 const ColorButton = styled(Button)<ButtonProps>(() => ({
   backgroundColor: '#F54866',
@@ -27,28 +28,30 @@ function Header() {
             </div>
             <nav className="hidden md:flex space-x-8">
               <Link
-                to="/Pagination"
+                to="/pagination/rick-and-morty?page=1"
                 className="text-gray-500 hover:text-gray-900"
               >
-                Pokemon Pagination
-              </Link>
-              <Link to="/Rate" className="text-gray-500 hover:text-gray-900">
-                Rate this App
+                Pagination
               </Link>
               <Link
-                to="/Whatever"
+                to="/this-app"
                 className="text-gray-500 hover:text-gray-900"
               >
-                Whatever
+                About this app
+              </Link>
+              <Link to="/zsiga" className="text-gray-500 hover:text-gray-900">
+                About me Zsiga
               </Link>
             </nav>
             <div className="flex items-center">
-              <ColorButton
-                variant="contained"
-                className="text-gray-500 hover:bg-gray-900"
-              >
-                Login
-              </ColorButton>
+              <Tooltip title="Coming soon!">
+                <ColorButton
+                  variant="contained"
+                  className="text-gray-500 hover:bg-gray-900"
+                >
+                  Login
+                </ColorButton>
+              </Tooltip>
             </div>
           </div>
         </div>

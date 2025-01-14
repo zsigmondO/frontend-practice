@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -8,7 +7,7 @@ import { getStatusAndSpecies } from './helper/helper';
 
 export default function MediaCard(props: Character) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 300 }}>
       <CardMedia
         component="img"
         sx={{ height: 205 }}
@@ -21,9 +20,7 @@ export default function MediaCard(props: Character) {
           {getStatusAndSpecies(props.status, props.species)}
         </div>
         <div className="mb-2">Gender : {props.gender}</div>
-        <Link className="font-light text-sm" to={props.origin.url}>
-          {props.origin.name}
-        </Link>
+        <p className="font-light text-sm">{props.origin.name}</p>
       </CardContent>
     </Card>
   );

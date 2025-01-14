@@ -1,5 +1,3 @@
-import { useCallback, useRef } from 'react';
-
 import '../card.scss';
 
 export function getStatusAndSpecies(
@@ -33,28 +31,5 @@ export function getStatusAndSpecies(
         {status} - {species}
       </p>
     </div>
-  );
-}
-
-// eslint-disable-next-line no-unused-vars
-export function useDebounce<T extends (...args: any[]) => void>(
-  callback: T,
-  delay: number,
-  // eslint-disable-next-line no-unused-vars
-): (...args: Parameters<T>) => void {
-  // eslint-disable-next-line no-undef
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  return useCallback(
-    (...args: Parameters<T>) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(() => {
-        callback(...args);
-      }, delay);
-    },
-    [callback, delay],
   );
 }

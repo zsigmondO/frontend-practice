@@ -1,11 +1,6 @@
-# I practice mainly frontend related things in this project
+# This both my frontend portfolio and my sandbox app for practicing stuff
 
-What these emojis mean (might use these or not)?
-- ✅ - done practicing the topic
-- ❌ - haven't started yet, but looking forward to it
-- ⏳ - practice is in progress (I visit more topics in parallel, so it isn't related to just one)
-
-### Practical project exercises:
+### Practical project exercises, I want to do as many of these as possible:
 - Pagination
   - Client-side pagination (breaking data into pages)
   - Server-side pagination (loading data on demand)
@@ -40,7 +35,7 @@ What these emojis mean (might use these or not)?
   - Theme switching with localStorage persistence
   
 
-### Other topics I visit:
+### Other stuff I should be aware:
 1. Core Fundamentals ⏳
    1. HTML
       - Semantic HTML (e.g., article, section, header, footer)
@@ -145,4 +140,31 @@ What these emojis mean (might use these or not)?
 23. Task Runners (e.g., Gulp)
 24. Writing docs (basically this Readme is enough for that)
 
-_There could be duplicates, silly stuff and other mistakes in this list, but I always try to keep it tight and uptaded!_
+#### Mentorálás:
+Fixed:
+- Kétszer hív be az apira, amikor az oldalra lépek. 
+  - Megoldás: Bentmaradt a StrictMode deploynál ami 2x hívta az apit a 2x render miatt.
+- Az api url-en a filter értékei ne menjenek be üresen 
+  - Megoldás: Kicseréltem a ?? operátort a ||-ra vissza és így nem 0 a kezdeti érték
+- Ha frissítem az oldalt, akkor lehal minden 
+  - Megoldás: "Uncaught SyntaxError: Unexpected token '<'" < script src="index.html"></script> ezt ki kellett egészíteni egy type=text/HTML-lel
+- Page indexek nem jók  
+  - Megoldás: kicseréltem a ?? operátort a ||-ra vissza és így nem 0 a kezdeti érték. Lehet inicializálásnál túl megengedő...
+- Reszponzivitás szinte tökéletes legyen 
+  - Megoldás: Szerintem már majdnem tökéletes a paginálós oldalon. Kicsi közepes és nagy oldalrakra is külön bővítménnyel állítva a képernyő méretét.
+- Illetve az oldal betöltésekor kérődjönek le a szűrőparamétereknek és a paginációnak megfelelő resultok
+  - Megoldás: Szerintem ez jó volt alapból de lehet Roli valahogy máshogy tesztelte és úgy bugos. Tesztelnem kell még rajta.
+  
+Nem fixed még / megmutatom újra hogy szerintem miért jó:
+- Legyen rajta valami search gomb, megnyomásra
+  - Search gomb helyett filter clearelő gombot raktam, mert ha nem ismeri valaki a műsort akkor nem fogja tudni hogy mire tud rákeresni ezért jobb ha egyből keres gépelésre. Pl vannak Human-ok és Humanoid-ok is.
+- Ha vissza gombot nyomok az előző oldalra ugorjak, ne pedig az előző filterparaméterekre.
+  - Nem tudom hogy igazam van-e de szerintem ez jól működik. Ha Zalando-n kipróbálom hogy egy cipőn márkát és méretet állítok akkor először a méretet veszi el az URL-ből aztán pedig a márkáját a cipőnek amikor visszalépek.
+- Filter paramok defaultból ne kerüljenek be az urlbe, ha a page-re lépek
+  - De ha valaki el akarja linkelni az oldalt a kért paraméterekkel akkor pont hogy azt akarjuk, hogy ők is lássák hogy mi mire szűrtünk, nem?
+
+Optional
+- Ne legyen vegyítve a material és a tailwind, vagy ha igen, akkor indokold meg, ha esetleg megkérdezik
+- Én azt ajánlom, hogy shadecn legyen használva
+  - Ez jogos de szeretem gyakorolni a dolgoakt ebben az appban
+  - Egy új rendes prodos app-ban nem vegyíteném a kettőt

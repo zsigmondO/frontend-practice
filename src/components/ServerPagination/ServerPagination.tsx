@@ -1,5 +1,4 @@
 import {
-  Box,
   FormControl,
   InputLabel,
   MenuItem,
@@ -7,14 +6,26 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
+  Tooltip,
 } from '@mui/material';
+import HelpIcon from '@mui/icons-material/Help';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import Button, { ButtonProps } from '@mui/material/Button';
+import { grey } from '@mui/material/colors';
 
 import { Layout } from '../Layout/Layout';
 import MediaCard from './MediaCard';
 import useCharactersFilter from '../../hooks/charactersQuery';
 import SearchNotFound from '../NotFound/SearchNotFound';
+
+const ColorButton = styled(Button)<ButtonProps>(() => ({
+  backgroundColor: '#F54866',
+  '&:hover': {
+    backgroundColor: grey[900],
+  },
+}));
 
 function ServerPagination() {
   const navigate = useNavigate();
@@ -24,13 +35,13 @@ function ServerPagination() {
     useCharactersFilter();
 
   const [sortOrder, setSortOrder] = useState<string>('');
-  const [name, setName] = useState(searchParams.get('name') ?? '');
-  const [status, setStatus] = useState(searchParams.get('status') ?? '');
-  const [species, setSpecies] = useState(searchParams.get('species') ?? '');
-  const [type, setType] = useState(searchParams.get('type') ?? '');
-  const [gender, setGender] = useState(searchParams.get('gender') ?? '');
+  const [name, setName] = useState(searchParams.get('name') || '');
+  const [status, setStatus] = useState(searchParams.get('status') || '');
+  const [species, setSpecies] = useState(searchParams.get('species') || '');
+  const [type, setType] = useState(searchParams.get('type') || '');
+  const [gender, setGender] = useState(searchParams.get('gender') || '');
   const [currentPage, setCurrentPage] = useState(
-    Number(searchParams.get('page')) ?? 1,
+    Number(searchParams.get('page')) || 1,
   );
   const [hideNextButton, setHideNextButton] = useState(currentPage === 1);
   const [hidePrevButton, setHidePrevButton] = useState(
@@ -41,9 +52,10 @@ function ServerPagination() {
     const params = new URLSearchParams(searchParams);
     params.set('page', currentPage.toString());
 
-    if (name) params.set('name', name.toLowerCase());
-    if (species) params.set('species', species.toLowerCase());
-    if (type) params.set('type', type.toLowerCase());
+    if (name && name.length >= 3) params.set('name', name.toLowerCase());
+    if (species && species.length >= 3)
+      params.set('species', species.toLowerCase());
+    if (type && type.length >= 3) params.set('type', type.toLowerCase());
     if (status) params.set('status', status.toLowerCase());
     if (gender) params.set('gender', gender.toLowerCase());
 
@@ -87,6 +99,18 @@ function ServerPagination() {
     }
   };
 
+  const onClearFilters = () => {
+    [...searchParams.keys()].forEach((key) => {
+      searchParams.delete(key);
+    });
+    setName('');
+    setSpecies('');
+    setType('');
+    setStatus('');
+    setGender('');
+    setCurrentPage(1);
+  };
+
   const handleNameChange = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
@@ -127,57 +151,92 @@ function ServerPagination() {
       <Layout>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
           <div className="bg-white rounded-lg shadow-sm p-4">
-            <div className="flex gap-5 mx-1 items-center justify-center">
-              <TextField
-                id="outlined-basic"
-                label="Search by Name"
-                variant="outlined"
-                value={name}
-                onChange={handleNameChange}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Search by Species"
-                variant="outlined"
-                value={species}
-                onChange={handleSpeciesChange}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Search by Type"
-                variant="outlined"
-                value={type}
-                onChange={handleTypeChange}
-              />
-              <Box>
-                <FormControl sx={{ minWidth: 170 }}>
-                  <InputLabel id="demo-simple-select-label">
+            <div className="flex flex-col space-y-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-center sm:space-y-0 sm:space-x-4">
+              <div className="flex items-center justify-center space-x-4 py-4">
+                <Tooltip
+                  title="To search type at least 3 characters!"
+                  arrow
+                  placement="top"
+                >
+                  <span>
+                    <HelpIcon className="text-app-primary-color-tailwind hover:text-gray-900" />
+                  </span>
+                </Tooltip>
+                <ColorButton
+                  variant="contained"
+                  className="text-gray-500 hover:bg-gray-900"
+                  size={'small'}
+                  onClick={onClearFilters}
+                >
+                  Clear Filters
+                </ColorButton>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:pr-4 md:pr-4">
+                <TextField
+                  error={name.length < 3 && name.length !== 0}
+                  id="outlined-basic"
+                  label="Search by Name"
+                  variant="outlined"
+                  value={name}
+                  onChange={handleNameChange}
+                  className="w-full"
+                />
+                <TextField
+                  error={species.length < 3 && species.length !== 0}
+                  id="outlined-basic"
+                  label="Search by Species"
+                  variant="outlined"
+                  value={species}
+                  onChange={handleSpeciesChange}
+                  className="w-full"
+                />
+                <TextField
+                  error={type.length < 3 && type.length !== 0}
+                  id="outlined-basic"
+                  label="Search by Type"
+                  variant="outlined"
+                  value={type}
+                  onChange={handleTypeChange}
+                  className="w-full"
+                />
+                <FormControl
+                  className="w-full"
+                  sx={{
+                    minWidth: 'full',
+                  }}
+                >
+                  <InputLabel id="status-select-label">
                     Filter by Status
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="status-select-label"
+                    id="status-select"
                     label="Filter by Status"
                     onChange={handleStatusChange}
-                    value={status ?? ''}
+                    value={status || ''}
+                    className="w-full"
                   >
                     <MenuItem value={'alive'}>alive</MenuItem>
                     <MenuItem value={'dead'}>dead</MenuItem>
                     <MenuItem value={'unknown'}>unknown</MenuItem>
                   </Select>
                 </FormControl>
-              </Box>
-              <Box>
-                <FormControl sx={{ minWidth: 170 }}>
+                <FormControl
+                  className="w-full"
+                  sx={{
+                    minWidth: 'full',
+                  }}
+                >
                   <InputLabel id="demo-simple-select-label">
                     Filter by Gender
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Sort by name"
+                    labelId="gender-select-label"
+                    id="gender-select"
+                    label="Filter by Gender"
                     onChange={handleGenderChange}
-                    value={gender ?? ''}
+                    value={gender || ''}
+                    className="w-full"
                   >
                     <MenuItem value={'Female'}>Female</MenuItem>
                     <MenuItem value={'Male'}>Male</MenuItem>
@@ -185,28 +244,32 @@ function ServerPagination() {
                     <MenuItem value={'Unknown'}>Unknown</MenuItem>
                   </Select>
                 </FormControl>
-              </Box>
-              <Box>
-                <FormControl sx={{ minWidth: 170 }}>
+                <FormControl
+                  className="w-full"
+                  sx={{
+                    minWidth: 'full',
+                  }}
+                >
                   <InputLabel id="demo-simple-select-label">
                     Sort by name
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="sort-select-label"
+                    id="sort-select"
                     label="Sort by name"
                     onChange={(e) => setSortOrder(e.target.value)}
                     value={sortOrder}
+                    className="w-full"
                   >
                     <MenuItem value={'Ascending'}>Ascending</MenuItem>
                     <MenuItem value={'Descending'}>Descending</MenuItem>
                   </Select>
                 </FormControl>
-              </Box>
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-center max-w-7xl pb-2 mx-auto sm:px-6 lg:px-8 my-4">
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -234,8 +297,8 @@ function ServerPagination() {
           </div>
         ) : (
           <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-3">
-              <div className="grid grid-cols-4 gap-4">
+            <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-3min-h-screen">
+              <div className="grid grow grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {characters.map((character, index) => (
                   <MediaCard
                     key={index}
@@ -253,7 +316,7 @@ function ServerPagination() {
                 ))}
               </div>
             </div>
-            <div className="flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-center max-w-7xl mx-auto pt-4 sm:px-6 lg:px-8 my-4">
               <Pagination
                 count={totalPages}
                 page={currentPage}
