@@ -154,14 +154,19 @@ Fixed:
   - Megoldás: Szerintem már majdnem tökéletes a paginálós oldalon. Kicsi közepes és nagy oldalrakra is külön bővítménnyel állítva a képernyő méretét.
 - Illetve az oldal betöltésekor kérődjönek le a szűrőparamétereknek és a paginációnak megfelelő resultok
   - Megoldás: Szerintem ez jó volt alapból de lehet Roli valahogy máshogy tesztelte és úgy bugos. Tesztelnem kell még rajta.
-  
-Nem fixed még / megmutatom újra hogy szerintem miért jó:
 - Legyen rajta valami search gomb, megnyomásra
-  - Search gomb helyett filter clearelő gombot raktam, mert ha nem ismeri valaki a műsort akkor nem fogja tudni hogy mire tud rákeresni ezért jobb ha egyből keres gépelésre. Pl vannak Human-ok és Humanoid-ok is.
+    - Search gomb helyett filter clearelő gombot raktam, mert ha nem ismeri valaki a műsort akkor nem fogja tudni hogy mire tud rákeresni ezért jobb ha egyből keres gépelésre. Pl vannak Human-ok és Humanoid-ok is.
 - Ha vissza gombot nyomok az előző oldalra ugorjak, ne pedig az előző filterparaméterekre.
-  - Nem tudom hogy igazam van-e de szerintem ez jól működik. Ha Zalando-n kipróbálom hogy egy cipőn márkát és méretet állítok akkor először a méretet veszi el az URL-ből aztán pedig a márkáját a cipőnek amikor visszalépek.
+    - Nem tudom hogy igazam van-e de szerintem ez jól működik. Ha Zalando-n kipróbálom hogy egy cipőn márkát és méretet állítok akkor először a méretet veszi el az URL-ből aztán pedig a márkáját a cipőnek amikor visszalépek.
 - Filter paramok defaultból ne kerüljenek be az urlbe, ha a page-re lépek
-  - De ha valaki el akarja linkelni az oldalt a kért paraméterekkel akkor pont hogy azt akarjuk, hogy ők is lássák hogy mi mire szűrtünk, nem?
+    - De ha valaki el akarja linkelni az oldalt a kért paraméterekkel akkor pont hogy azt akarjuk, hogy ők is lássák hogy mi mire szűrtünk, nem?
+- Mivel az API nem tud sortolni az összes találat között ezért csak kliens oldalt sortolok, ami nem jó, érdemes lenne kivenni ezt a lehetőséget
+    - Megoldottam úgy, hogy ráraktam egy tooltip-et a menüre, szerintem érdemes bent hagyni mert az igazi munkában nem mindig fekete-fehér a megoldás amit keresünk, alkalmazkodni tudni kell a kéréshez
+
+Nem fixed még / megmutatom újra hogy szerintem miért jó:
+- Form validátor használata
+  - Én csinálom a form validálást ami nem biztos hogy a legjobb, de működik
+  - Meg kell nézni a Formik, React Hook Form + Yup könyvtárakat mert ezek a legjobbak a material-ui-hoz
 
 Optional
 - Ne legyen vegyítve a material és a tailwind, vagy ha igen, akkor indokold meg, ha esetleg megkérdezik

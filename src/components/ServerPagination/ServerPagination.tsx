@@ -244,27 +244,34 @@ function ServerPagination() {
                     <MenuItem value={'Unknown'}>Unknown</MenuItem>
                   </Select>
                 </FormControl>
-                <FormControl
-                  className="w-full"
-                  sx={{
-                    minWidth: 'full',
-                  }}
+                <Tooltip
+                  title="The API doesn't support server side sorting. You can only sort the results you get, so don't be confused!"
+                  arrow
+                  placement="top"
                 >
-                  <InputLabel id="demo-simple-select-label">
-                    Sort by name
-                  </InputLabel>
-                  <Select
-                    labelId="sort-select-label"
-                    id="sort-select"
-                    label="Sort by name"
-                    onChange={(e) => setSortOrder(e.target.value)}
-                    value={sortOrder}
+                  <FormControl
                     className="w-full"
+                    sx={{
+                      minWidth: 'full',
+                    }}
+                    error
                   >
-                    <MenuItem value={'Ascending'}>Ascending</MenuItem>
-                    <MenuItem value={'Descending'}>Descending</MenuItem>
-                  </Select>
-                </FormControl>
+                    <InputLabel id="demo-simple-select-label">
+                      Sort by name
+                    </InputLabel>
+                    <Select
+                      labelId="sort-select-label"
+                      id="sort-select"
+                      label="Sort by name"
+                      onChange={(e) => setSortOrder(e.target.value)}
+                      value={sortOrder}
+                      className="w-full"
+                    >
+                      <MenuItem value={'Ascending'}>Ascending</MenuItem>
+                      <MenuItem value={'Descending'}>Descending</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Tooltip>
               </div>
             </div>
           </div>
